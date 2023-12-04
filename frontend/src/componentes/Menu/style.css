@@ -1,0 +1,23 @@
+.menu {
+    display: flex;
+    justify-content: space-around;
+    background-color: coral;
+    color: rgb(0, 0, 0);
+}
+
+.nav-extended {
+    background-color: rgba(0, 123, 255, 0.862);
+}
+
+@media screen and (max-width: 767px) {
+    .brand-logo {
+        font-size: 20px !important;
+    }
+}
+
+
+@media screen and (min-width: 768px) {
+    .brand-logo {
+        margin: 0 20px;
+    }
+}

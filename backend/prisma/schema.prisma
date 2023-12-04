@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+//setup models
+
+model Funcionario {
+  id_funcionario Int    @id @default(autoincrement())
+  nome           String @db.VarChar(30)
+  id_dupla       Int?
+  dupla          Dupla? @relation(fields: [id_dupla], references: [id_dupla])
+
+  @@map("Funcionarios")
+}
+
+model Dupla {
+  id_dupla   Int     @id @default(autoincrement())
+  nome_dupla String  @db.VarChar(30)
+  anotacoes  String? @db.VarChar(60)
+
+  funcionarios Funcionario[]
+  picture      Picture?      @relation(fields: [id_picture], references: [id_picture])
+  id_picture   Int?
+
+  @@map("Duplas")
+}
+
+model Picture {
+  id_picture Int     @id @default(autoincrement())
+  path_url   String? @db.VarChar(150)
+  dupla      Dupla[]
+
+  @@map("Pictures")
+}

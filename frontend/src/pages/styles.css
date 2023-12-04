@@ -1,0 +1,167 @@
+h2 {
+  margin-top: 100px;
+}
+
+.showArea {
+  display: flex;
+  align-items: center;
+  margin-top: 20%;
+  justify-content: center;
+  background-color: rgba(0, 123, 255, 0.862)
+}
+
+.showArea h3 {
+  width: 25%;
+  color: whitesmoke;
+}
+
+h6 {
+  display: flex;
+  justify-content: center;
+  font-size: x-large;
+  margin-bottom: 10%;
+}
+
+.page-footer {
+  background-color: rgba(0, 0, 0, 0.74);
+  margin-bottom: 0px !important;
+}
+
+.action {
+  margin-top: 75px;
+}
+
+.formBtn {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px;
+}
+
+.loader {
+  width: 100%;
+  height: 10px;
+  position: relative;
+  overflow: hidden;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.loader::after {
+  content: '';
+  display: block;
+  width: 50%;
+  height: 100%;
+  background-color: #007bff;
+  animation: progress 2s infinite;
+}
+
+@keyframes progress {
+  0% {
+    margin-left: -100%;
+  }
+
+  100% {
+    margin-left: 100%;
+  }
+}
+
+
+/*avatar select*/
+.custom-select {
+  display: flex;
+}
+
+.option {
+  margin-right: 10px;
+  /* Espaçamento entre as miniaturas */
+}
+
+.option img {
+  max-width: 50px;
+  max-height: 50px;
+  padding-top: 4px;
+}
+
+.custom-select .selected {
+  border: 2px solid #686868;
+  /* Adicione um destaque visual à imagem selecionada */
+  border-radius: 30%;
+}
+
+/* Estilo para o contêiner do display */
+.display {
+  display: flex;
+  align-items: center;
+  /* Alinhar verticalmente */
+  justify-content: center;
+  /* Alinhar Horizontalmente */
+  max-width: 800px;
+  /* Ajuste o tamanho conforme necessário */
+  margin: 0 auto;
+  /* Centralizar na página */
+  padding: 20px;
+}
+
+/* Estilo para a imagem */
+.display img {
+  width: 150px;
+  /* Ajuste o tamanho da imagem conforme necessário */
+  height: auto;
+  margin-right: 20px;
+  /* Espaçamento entre a imagem e o texto */
+}
+
+/* Estilo para o texto da equipe */
+.display .team-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Alinhar verticalmente */
+  font-size: 16pt;
+}
+
+/* Estilo para os textos */
+.display .team-info p {
+  margin: 5px 0;
+  /* Espaçamento entre os parágrafos */
+}
+
+
+/* 404 page style */
+.e404 {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background-color: #ffcccb;
+  text-align: center;
+  padding: 50px;
+}
+
+.e404 .h1 {
+  font-size: 80px;
+  color: #ff0000;
+  margin-bottom: 20px;
+}
+
+.e404 .p {
+  font-size: 24px;
+  color: #000;
+}
+
+.e404 .img {
+  width: 300px;
+  height: auto;
+  margin-top: 20px;
+}
+
+/* Estilo alternativo para a frase diária */
+.daily-phrase {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  text-align: center;
+  background-color: #f8f8f8;
+  padding: 20px;
+  margin: 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+
