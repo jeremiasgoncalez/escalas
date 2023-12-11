@@ -28,37 +28,37 @@ function Home() {
     }, []);
 
     useEffect(() => {
-        // Atualize a equipe do dia quando a equipe ou a data mudar
         const calcularDuplaDoDia = () => {
             const today = new Date();
-            const dayOfWeek = today.getDay();
-
-            let posicaoInicial = 0;
-            posicaoInicial = (posicaoInicial + dayOfWeek - 1) % equipe.length;
-
-            const duplaDoDia = equipe[posicaoInicial];
-            setEquipeHoje(duplaDoDia);
+            const dayOfWeek = today.getDay(); // 0 para Domingo, 1 para Segunda, 2 para Terça, ...
+    
+            // Verificando se é sábado (6) ou domingo (0)
+            if (dayOfWeek === 0 || dayOfWeek === 6) {
+                setEquipeHoje({ picture: {path_url: "https://agendazap.s3.sa-east-1.amazonaws.com/store_image/store_145243_1.jpg"},  mensagem: "Nenhuma Tarefa Pendente!" });
+            } else {
+                // Suponha que a sua fila comece na posição 0 do array de duplas
+                let posicaoInicial = 0;
+    
+                // Lógica para determinar a posição inicial da fila com base no dia da semana
+                // Por exemplo, se for Segunda (1), a posição inicial seria 0; Terça (2), posição 1; e assim por diante
+                posicaoInicial = (posicaoInicial + dayOfWeek - 1) % equipe.length;
+    
+                // A posição inicial da fila para o dia de hoje
+                const duplaDoDia = equipe[posicaoInicial];
+    
+                setEquipeHoje(duplaDoDia);
+            }
         };
-
+    
         calcularDuplaDoDia();
         getDailyPhrase();
     }, [equipe]);
+    
+    useEffect(() => {
+        getDailyPhrase();
+    }, []);
+    
 
-    function calcularDuplaDoDia() {
-        const today = new Date();
-        const dayOfWeek = today.getDay(); // 0 para Domingo, 1 para Segunda, 2 para Terça, ...
-
-        // Suponha que a sua fila comece na posição 0 do array de duplas
-        let posicaoInicial = 0;
-
-        // Lógica para determinar a posição inicial da fila com base no dia da semana
-        // Por exemplo, se for Segunda (1), a posição inicial seria 0; Terça (2), posição 1; e assim por diante
-        posicaoInicial = (posicaoInicial + dayOfWeek - 1) % equipe.length;
-
-        // A posição inicial da fila para o dia de hoje
-        const duplaDoDia = equipe[posicaoInicial];
-        return duplaDoDia;
-    }
 
     async function getDailyPhrase() {
         const response = await axios.get('https://api.quotable.io/random');
@@ -82,22 +82,31 @@ function Home() {
 
                 <br></br>
                 <h6>{today.toLocaleDateString('pt-BR', options)}</h6>
-                <div className="display">
-                    {equipeHoje && (
-                        <>
-                            {equipeHoje.picture && equipeHoje.picture.path_url ? (
-                                <div>
-                                    <img src={equipeHoje.picture.path_url} alt="Avatar" />
-                                </div>
-                            ) : (
-                                <p>Imagem não disponível</p>
-                            )}
 
-                            <div className="team-info">
-                                <p>Equipe <b>{equipeHoje.nome_dupla}</b></p>
-                                <p>Responsáveis: {equipeHoje.funcionarios.map(funcionario => funcionario.nome).join(', ')}</p>
-                            </div>
+
+                <div className="display">
+                    {equipeHoje ? (
+                         <>
+                         {equipeHoje.picture && equipeHoje.picture.path_url ? (
+                             <div>
+                                 <img src={equipeHoje.picture.path_url} alt="Avatar" />
+                             </div>
+                         ) : (
+                             <p>Imagem não disponível</p>
+                         )}
+
+                         <div className="team-info">
+                             <p>Equipe: <b>{equipeHoje.nome_dupla}</b></p>
+                             {equipeHoje.funcionarios && equipeHoje.funcionarios.length > 0 ? (
+                                 <p>Responsáveis: {equipeHoje.funcionarios.map(funcionario => funcionario.nome).join(', ')}</p>
+                             ) : (
+                                 <p>Responsáveis não encontrados</p>
+                             )}
+                         </div>
                         </>
+                       
+                    ) : (
+                        <p>Tudo Limpo!</p>
                     )}
                 </div>
 
@@ -137,3 +146,83 @@ function Home() {
     );
 }
 export default Home;
+
+/* VERSAO 1
+<div className="display">
+                    {equipeHoje && (
+                        <>
+                            {equipeHoje.picture && equipeHoje.picture.path_url ? (
+                                <div>
+                                    <img src={equipeHoje.picture.path_url} alt="Avatar" />
+                                </div>
+                            ) : (
+                                <p>Imagem não disponível</p>
+                            )}
+
+                            <div className="team-info">
+                                <p>Equipe <b>{equipeHoje.nome_dupla}</b></p>
+                                <p>Responsáveis: {equipeHoje.funcionarios.map(funcionario => funcionario.nome).join(', ')}</p>
+                            </div>
+                        </>
+                    )}
+                </div>
+*/
+
+    /* USE EFFECT atnterior de calculodia
+       // Atualize a equipe do dia quando a equipe ou a data mudar
+                const calcularDuplaDoDia = () => {
+                    const today = new Date();
+                    const dayOfWeek = today.getDay();
+    
+                    let posicaoInicial = 0;
+                    posicaoInicial = (posicaoInicial + dayOfWeek - 1) % equipe.length;
+    
+                    const duplaDoDia = equipe[posicaoInicial];
+                    setEquipeHoje(duplaDoDia);
+                };
+    
+                */
+    /*
+        //versao 2
+        function calcularDuplaDoDia() {
+            const today = new Date();
+            const dayOfWeek = today.getDay(); // 0 para Domingo, 1 para Segunda, 2 para Terça, ...
+    
+            // Verificando se é sábado (6) ou domingo (0)
+            if (dayOfWeek === 0 || dayOfWeek === 6) {
+                setEquipeHoje("Nenhuma Tarefa Pendente!");
+            } else {
+                // Suponha que a sua fila comece na posição 0 do array de duplas
+                let posicaoInicial = 0;
+    
+                // Lógica para determinar a posição inicial da fila com base no dia da semana
+                // Por exemplo, se for Segunda (1), a posição inicial seria 0; Terça (2), posição 1; e assim por diante
+                posicaoInicial = (posicaoInicial + dayOfWeek - 1) % equipe.length;
+    
+                // A posição inicial da fila para o dia de hoje
+                const duplaDoDia = equipe[posicaoInicial];
+    
+                setEquipeHoje(duplaDoDia);
+            }
+        }
+    */
+
+
+    //versao 1
+
+    /*function calcularDuplaDoDia() {
+        const today = new Date();
+        const dayOfWeek = today.getDay(); // 0 para Domingo, 1 para Segunda, 2 para Terça, ...
+ 
+        // Suponha que a sua fila comece na posição 0 do array de duplas
+        let posicaoInicial = 0;
+ 
+        // Lógica para determinar a posição inicial da fila com base no dia da semana
+        // Por exemplo, se for Segunda (1), a posição inicial seria 0; Terça (2), posição 1; e assim por diante
+        posicaoInicial = (posicaoInicial + dayOfWeek - 1) % equipe.length;
+ 
+        // A posição inicial da fila para o dia de hoje
+        const duplaDoDia = equipe[posicaoInicial];
+    
+        return duplaDoDia;
+    }*/
